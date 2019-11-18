@@ -20,8 +20,6 @@
 
 ;; IVY/COUNSEL
 (global-set-key (kbd "C-s") 'swiper-isearch)
-(global-set-key (kbd "C-SPC") 'counsel-M-x)
-(global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
 (global-set-key (kbd "C-c b") 'ivy-switch-buffer)
@@ -33,7 +31,7 @@
 (general-define-key
  :states '(normal visual insert emacs)
  :prefix "SPC"
- :non-normal-prefix "M-SPC"
+ :non-normal-prefix "C-SPC"
   "'" '(iterm-focus :which-key "iterm")
   "?" '(iterm-goto-filedir-or-home :which-key "iterm - goto dir")
   "/" '(counsel-ag :wich-key "ag")
