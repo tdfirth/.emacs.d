@@ -18,15 +18,6 @@
 
 (global-set-key [remap keyboard-quit] #'tdfirth/escape)
 
-;; IVY/COUNSEL
-(global-set-key (kbd "C-s") 'swiper-isearch)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "M-y") 'counsel-yank-pop)
-(global-set-key (kbd "C-c b") 'ivy-switch-buffer)
-(global-set-key (kbd "C-c v") 'ivy-push-view)
-(global-set-key (kbd "C-c V") 'ivy-pop-view)
-(global-set-key (kbd "C-c C-f") 'counsel-find-file)
-
 ;; SPC
 (general-define-key
  :states '(normal visual insert emacs)
@@ -38,13 +29,34 @@
   "TAB" '(ivy-switch-buffer :which-key "prev buffer")
   "." '(avy-goto-word-or-subword-1  :which-key "go to word")
   "SPC" '(counsel-M-x :which-key "M-x")
-  "a" '(hydra-launcher/body :which-key "Applications")
-  "b" '(hydra-buffer/body t :which-key "Buffer")
-  "c" '(:ignore t :which-key "Comment")
+  "a" '(hydra-launcher/body :which-key "applications")
+  "b" '(:ignore t :which-key "buffer")
+  "bb" '(counsel-switch-buffer :which-key "switch buffer")
+  "c" '(:ignore t :which-key "comment")
   "cl" '(comment-or-uncomment-region-or-line :which-key "comment line")
-  "w" '(hydra-window/body :which-key "Window")
-  "f" '(:ignore t :which-key "Files")
-  "fd" '(counsel-git :which-key "find in git dir")
+  "d" '(:ignore t :which-key "dired")
+  "f" '(:ignore t :which-key "files")
+  "ff" '(counsel-find-file :which-key "find file")
+  "g" '(:ignore t :which-key "magit")
+  "p" '(:ignore t :which-key "projectile")
+  "w" '(:ignore t :which-key "window")
+  )
+
+(defun comment-or-uncomment-region-or-line ()
+    "Comments or uncomments the region or the current line if there's no active region."
+    (interactive)
+    (let (beg end)
+        (if (region-active-p)
+            (setq beg (region-beginning) end (region-end))
+            (setq beg (line-beginning-position) end (line-end-position)))
+        (comment-or-uncomment-region beg end)
+        (next-line)))
+
+;; C-c
+(general-define-key
+ :states '(normal visual)
+ :prefix "C-c"
+  "/" '(comment-or-uncomment-region-or-line :which-key "comment line/region")
   )
 
 (provide 'keybindings)
