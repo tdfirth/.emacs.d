@@ -16,6 +16,9 @@
 
 ;; other
 (setq make-backup-files nil)
+(setq auto-save-file-name-transforms
+  `((".*" "~/.emacs.d/autosave/" t)))
+
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
 
@@ -25,3 +28,17 @@
 (require 'keybindings)
 
 (setq gc-cons-threshold 50000000)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (flycheck company which-key wgrep solarized-theme smartparens markdown-mode magit general evil-leader counsel-projectile))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

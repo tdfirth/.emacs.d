@@ -15,16 +15,20 @@ There are two things you can do about this warning:
 
 (package-initialize)
 
-(defvar tdfirth/packages '(counsel-projectile
+(defvar tdfirth/packages '(company
+                           counsel-projectile
                            evil
+                           flycheck
                            general
                            ivy
                            magit
                            markdown-mode
                            org
+                           perspective
                            projectile
                            solarized-theme
                            smartparens
+                           wgrep
                            which-key
                            )
   "Required packages")
@@ -55,5 +59,11 @@ There are two things you can do about this warning:
 ;; smartparens
 (smartparens-global-mode 1)
 (show-paren-mode t)
+
+;; projectile
+(setq projectile-completion-system 'ivy)
+
+;; wgrep
+(setq wgrep-auto-save-buffer t)
 
 (provide 'packages)

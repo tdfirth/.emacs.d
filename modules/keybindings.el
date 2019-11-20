@@ -25,7 +25,7 @@
  :non-normal-prefix "C-SPC"
   "'" '(iterm-focus :which-key "iterm")
   "?" '(iterm-goto-filedir-or-home :which-key "iterm - goto dir")
-  "/" '(counsel-ag :wich-key "ag")
+  "/" '(counsel-projectile-rg :wich-key "rg")
   "TAB" '(ivy-switch-buffer :which-key "prev buffer")
   "." '(avy-goto-word-or-subword-1  :which-key "go to word")
   "SPC" '(counsel-M-x :which-key "M-x")
@@ -38,25 +38,30 @@
   "f" '(:ignore t :which-key "files")
   "ff" '(counsel-find-file :which-key "find file")
   "g" '(:ignore t :which-key "magit")
+  "m" '(:ignore t :which-key "major")
   "p" '(:ignore t :which-key "projectile")
   "w" '(:ignore t :which-key "window")
   )
 
-(defun comment-or-uncomment-region-or-line ()
+(defun tdfirth/comment-or-uncomment-region-or-line ()
     "Comments or uncomments the region or the current line if there's no active region."
     (interactive)
     (let (beg end)
         (if (region-active-p)
             (setq beg (region-beginning) end (region-end))
             (setq beg (line-beginning-position) end (line-end-position)))
-        (comment-or-uncomment-region beg end)
+        (tdfirth/comment-or-uncomment-region beg end)
         (next-line)))
 
-;; C-c
 (general-define-key
  :states '(normal visual)
  :prefix "C-c"
-  "/" '(comment-or-uncomment-region-or-line :which-key "comment line/region")
+  ";" '(tdfirth/comment-or-uncomment-region-or-line :which-key "comment line/region")
   )
+
+(general-define-key
+ :keymaps '(ivy-occur-grep-mode-map)
+ :prefix "C-c"
+ "C-e" '(ivy-wgrep-change-to-wgrep-mode :which-key "edit results"))
 
 (provide 'keybindings)
