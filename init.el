@@ -14,10 +14,16 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
-;; other
-(setq make-backup-files nil)
-(setq auto-save-file-name-transforms
-  `((".*" "~/.emacs.d/autosave/" t)))
+;; editor
+(defconst tdf-emacs-dir user-emacs-directory)
+(defconst tdf-module-dir (concat tdf-emacs-dir ".local/"))
+(defconst tdf-local-dir (concat tdf-emacs-dir ".local/"))
+(defconst tdf-cache-dir(concat tdf-local-dir "cache/"))
+(setq auto-save-default nil
+      create-lockfiles nil
+      make-backup-files nil
+      auto-save-list-file-name (concat tdf-cache-dir "autosave/")
+      backup-directory-alist `(("." . ,(concat tdf-cache-dir "backup/"))))
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
@@ -27,7 +33,9 @@
 (require 'packages)
 (require 'keybindings)
 
-(setq gc-cons-threshold 50000000)
+;; Reset gc for normal use.
+(setq gc-cons-threshold 16777216)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

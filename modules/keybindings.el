@@ -1,22 +1,23 @@
+;;; keybindings.el
 ; https://sam217pa.github.io/2016/09/23/keybindings-strategies-in-emacs/
 ; https://sam217pa.github.io/2016/09/11/nuclear-power-editing-via-ivy-and-ag/
-(defvar tdfirth/escape-hook nil
+(defvar tdf/escape-hook nil
   "A hook run when C-g is pressed (or ESC in normal mode, for evil users")
 
-(defun tdfirth/escape ()
-  "Run `tdfirth-escape-hook'."
+(defun tdf/escape ()
+  "Run `tdf-escape-hook'."
   (interactive)
   (cond ((minibuffer-window-active-p (minibuffer-window))
          ;; quit the minibuffer if open.
          (abort-recursive-edit))
         ;; Run all escape hooks. If any returns non-nil, then stop there.
-        ((run-hook-with-args-until-success 'tdfirth/escape-hook))
+        ((run-hook-with-args-until-success 'tdf/escape-hook))
         ;; don't abort macros
         ((or defining-kbd-macro executing-kbd-macro) nil)
         ;; Back to the default
         ((keyboard-quit))))
 
-(global-set-key [remap keyboard-quit] #'tdfirth/escape)
+(global-set-key [remap keyboard-quit] #'tdf/escape)
 
 ;; SPC
 (general-define-key
@@ -43,20 +44,20 @@
   "w" '(:ignore t :which-key "window")
   )
 
-(defun tdfirth/comment-or-uncomment-region-or-line ()
+(defun tdf/comment-or-uncomment-region-or-line ()
     "Comments or uncomments the region or the current line if there's no active region."
     (interactive)
     (let (beg end)
         (if (region-active-p)
             (setq beg (region-beginning) end (region-end))
             (setq beg (line-beginning-position) end (line-end-position)))
-        (tdfirth/comment-or-uncomment-region beg end)
+        (tdf/comment-or-uncomment-region beg end)
         (next-line)))
 
 (general-define-key
  :states '(normal visual)
  :prefix "C-c"
-  ";" '(tdfirth/comment-or-uncomment-region-or-line :which-key "comment line/region")
+  ";" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
   )
 
 (general-define-key
