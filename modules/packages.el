@@ -53,8 +53,20 @@
   (setq enable-recursive-minibuffers t)
   (ivy-mode 1))
 
+(use-package recentf
+  :config
+  (setq recentf-save-file (concat tdf-cache-dir "recentf")
+        recentf-auto-cleanup 'never
+        recentf-max-menu-items 0
+        recentf-max-saved-items 200
+        recentf-exclude
+        (list "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$" "^/tmp/" "^/ssh:"
+              "\\.?ido\\.last$" "\\.revive$" "/TAGS$" "^/var/folders/.+$"
+              ;; ignore private temp files
+              (concat "^" (recentf-apply-filename-handlers tdf-local-dir))))
+  ;; TODO look at the switch window hook in doom.
+  )
 
-;; smartparens
 (use-package smartparens
   :config
   (require 'smartparens-config)
@@ -113,9 +125,20 @@
   (smartparens-global-mode 1)
   (show-paren-mode t))
 
-;; projectile
 (use-package projectile
+  :init
+  (setq projectile-cache-file (concat tdf-cache-dir "projectile.cache")
+        projectile-known-projects-file (concat tdf-cache-dir "projectile.projects")
+        projectile-require-project-root t
+        projectile-globally-ignored-files '(".DS_Store" "Icon" "TAGS")
+        projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o")
+        projectile-ignored-projects '("~/" "/tmp")
+        projectile-kill-buffers-filter 'kill-only-files
+        projectile-files-cache-expire 604800 ; expire after a week
+        projectile-sort-order 'recentf
+        projectile-use-git-grep t) ; use git-grep for text searches
   :config
+  (projectile-mode 1)
   (setq projectile-completion-system 'ivy))
 
 ;; wgrep

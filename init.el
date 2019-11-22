@@ -16,8 +16,9 @@
 
 ;; editor
 (defconst tdf-emacs-dir user-emacs-directory)
-(defconst tdf-module-dir (concat tdf-emacs-dir ".local/"))
+(defconst tdf-module-dir (concat tdf-emacs-dir "modules"))
 (defconst tdf-local-dir (concat tdf-emacs-dir ".local/"))
+(setq package-user-dir (concat tdf-local-dir "vendor/"))
 (defconst tdf-cache-dir(concat tdf-local-dir "cache/"))
 (setq auto-save-default nil
       create-lockfiles nil
