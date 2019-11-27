@@ -3,7 +3,7 @@
 (add-to-list 'default-frame-alist '(menu-bar-lines . 0))
 (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
 (add-to-list 'default-frame-alist '(vertical-scroll-bars))
-(add-to-list 'default-frame-alist '(font . "Inconsolata-16"))
+(add-to-list 'default-frame-alist '(font . "Hack NF-11"))
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
