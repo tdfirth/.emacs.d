@@ -44,7 +44,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck company which-key wgrep solarized-theme smartparens markdown-mode magit general evil-leader counsel-projectile))))
+    (evil-magit flycheck company which-key wgrep solarized-theme smartparens markdown-mode magit general evil-leader counsel-projectile)))
+ '(which-key-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -8,6 +8,7 @@
 (defvar tdf/packages '(company
                        counsel-projectile
                        evil
+                       evil-magit
                        flycheck
                        general
                        ivy
@@ -46,6 +47,11 @@
 (use-package evil
   :config
   (evil-mode 1))
+
+(use-package evil-magit
+  :config
+  (require 'evil-magit)
+  (setq evil-magit-state 'normal))
 
 (use-package ivy
   :config

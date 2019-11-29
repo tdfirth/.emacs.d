@@ -1,6 +1,4 @@
 ;;; keybindings.el
-; https://sam217pa.github.io/2016/09/23/keybindings-strategies-in-emacs/
-; https://sam217pa.github.io/2016/09/11/nuclear-power-editing-via-ivy-and-ag/
 (defvar tdf/escape-hook nil
   "A hook run when C-g is pressed (or ESC in normal mode, for evil users")
 
@@ -24,13 +22,8 @@
  :states '(normal visual insert emacs)
  :prefix "SPC"
  :non-normal-prefix "C-SPC"
-  "'" '(iterm-focus :which-key "iterm")
-  "?" '(iterm-goto-filedir-or-home :which-key "iterm - goto dir")
   "/" '(counsel-projectile-rg :wich-key "rg")
-  "TAB" '(ivy-switch-buffer :which-key "prev buffer")
-  "." '(avy-goto-word-or-subword-1  :which-key "go to word")
   "SPC" '(counsel-M-x :which-key "M-x")
-  "a" '(hydra-launcher/body :which-key "applications")
   "b" '(:ignore t :which-key "buffer")
   "bb" '(counsel-switch-buffer :which-key "switch buffer")
   "bk" '(kill-current-buffer :which-key "kill buffer")
@@ -43,7 +36,9 @@
   "ff" '(counsel-find-file :which-key "find file")
   "fr" '(counsel-recentf :which-key "find file")
   "g" '(:ignore t :which-key "magit")
-  "m" '(:ignore t :which-key "major")
+  "gg" '(magit-status :which-key "magit status")
+  "m" '(:ignore t :which-key "modes")
+  "mw" '(which-key-mode :which-key "which key")
   "p" '(:ignore t :which-key "projectile")
   "pb" '(projectile-switch-to-buffer :which-key "switch buffer")
   "pf" '(projectile-find-file :which-key "find file")
@@ -53,7 +48,26 @@
   "w" '(:ignore t :which-key "window")
   "wv" '(evil-window-vsplit :which-key "window")
   "wh" '(evil-window-split :which-key "window")
+  "t" '(:ignore t :which-key "test")
   )
+;; TODO this pattern will give consistent and quick keybindings between language modes, though it's a little cumbersome.
+;; can write a macro to provide easy bindings for the common tasks.
+;; Run tests, type check, find symbol, format buffer (that should be hooked on save), go to definition, find usages
+(general-define-key
+ :states '(normal visual insert emacs)
+ :prefix "SPC"
+ :non-normal-prefix "C-SPC"
+ :keymaps 'emacs-lisp-mode-map
+  "ts" '(counsel-M-x :which-key "test lisp mode")
+)
+
+(general-define-key
+ :states '(normal visual insert emacs)
+ :prefix "SPC"
+ :non-normal-prefix "C-SPC"
+ :keymaps 'sh-mode-map
+ "ts" '(counsel-switch-buffer :which-key "test shell mode")
+)
 
 (defun tdf/comment-or-uncomment-region-or-line ()
     "Comments or uncomments the region or the current line if there's no active region."
