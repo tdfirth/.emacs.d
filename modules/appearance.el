@@ -35,3 +35,5 @@
               indent-tabs-mode nil)
 
 (provide 'appearance)
+
+;;; appearence.el ends here

@@ -17,6 +17,7 @@
                        org
                        perspective
                        projectile
+                       rust-mode
                        smartparens
                        solarized-theme
                        use-package
@@ -57,6 +58,8 @@
   :config
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
+  (setq ivy-height 20)
+  (setq ivy-display-style 'fancy)
   (ivy-mode 1))
 
 (use-package recentf
@@ -105,10 +108,10 @@
     (setf (cdr (assq key sp-message-alist)) nil))
 
   (add-hook 'minibuffer-setup-hook
-             (defun tdf-init-smartparens-in-minibuffer-maybe-h ()
-               "Enable `smartparens-mode' in the minibuffer, during `eval-expression' or `evil-ex'."
-               (when (memq this-command '(eval-expression evil-ex))
-                 (smartparens-mode))))
+            (defun tdf-init-smartparens-in-minibuffer-maybe-h ()
+              "Enable `smartparens-mode' in the minibuffer, during `eval-expression' or `evil-ex'."
+              (when (memq this-command '(eval-expression evil-ex))
+                (smartparens-mode))))
 
   ;; You're likely writing lisp in the minibuffer, therefore, disable these
   ;; quote pairs, which lisps doesn't use for strings:
@@ -118,15 +121,15 @@
   ;; Smartparens breaks evil-mode's replace state
   (defvar tdf-buffer-smartparens-mode nil)
   (add-hook 'evil-replace-state-exit-hook
-             (defun tdf-enable-smartparens-mode-maybe-h ()
-               (when tdf-buffer-smartparens-mode
-                 (turn-on-smartparens-mode)
-                 (kill-local-variable 'tdf-buffer-smartparens-mode))))
+            (defun tdf-enable-smartparens-mode-maybe-h ()
+              (when tdf-buffer-smartparens-mode
+                (turn-on-smartparens-mode)
+                (kill-local-variable 'tdf-buffer-smartparens-mode))))
   (add-hook 'evil-replace-state-entry-hook
-             (defun tdf-disable-smartparens-mode-maybe-h ()
-               (when smartparens-mode
-                 (setq-local tdf-buffer-smartparens-mode t)
-                 (turn-off-smartparens-mode))))
+            (defun tdf-disable-smartparens-mode-maybe-h ()
+              (when smartparens-mode
+                (setq-local tdf-buffer-smartparens-mode t)
+                (turn-off-smartparens-mode))))
 
   (smartparens-global-mode 1)
   (show-paren-mode t))
@@ -153,3 +156,5 @@
   (setq wgrep-auto-save-buffer t))
 
 (provide 'packages)
+
+;;; packages.el ends here

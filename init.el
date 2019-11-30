@@ -1,3 +1,4 @@
+;;; init.el
 (setq user-full-name "Tom Firth"
       user-mail-address "thomas.d.firth@gmail.com")
 (setenv "PATH" (concat "/usr/local/bin:/opt/local/bin:/usr/bin:/bin" (getenv "PATH")))
@@ -44,7 +45,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (evil-magit flycheck company which-key wgrep solarized-theme smartparens markdown-mode magit general evil-leader counsel-projectile)))
+    (rust-mode evil-magit flycheck company which-key wgrep solarized-theme smartparens markdown-mode magit general evil-leader counsel-projectile)))
  '(which-key-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -52,3 +53,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;;; init.el ends here

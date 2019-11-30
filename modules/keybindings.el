@@ -1,6 +1,6 @@
 ;;; keybindings.el
 (defvar tdf/escape-hook nil
-  "A hook run when C-g is pressed (or ESC in normal mode, for evil users")
+  "A hook run when C-g is pressed (or ESC in normal mode, for evil users.")
 
 (defun tdf/escape ()
   "Run `tdf-escape-hook'."
@@ -17,73 +17,76 @@
 
 (global-set-key [remap keyboard-quit] #'tdf/escape)
 
-;; SPC
-(general-define-key
- :states '(normal visual insert emacs)
- :prefix "SPC"
- :non-normal-prefix "C-SPC"
-  "/" '(counsel-projectile-rg :wich-key "rg")
-  "SPC" '(counsel-M-x :which-key "M-x")
-  "b" '(:ignore t :which-key "buffer")
-  "bb" '(counsel-switch-buffer :which-key "switch buffer")
-  "bk" '(kill-current-buffer :which-key "kill buffer")
-  "bn" '(switch-to-next-buffer :which-key "next buffer")
-  "bp" '(switch-to-prev-buffer :which-key "previous buffer")
-  "c" '(:ignore t :which-key "comment")
-  "cl" '(comment-or-uncomment-region-or-line :which-key "comment line")
-  "d" '(:ignore t :which-key "dired")
-  "f" '(:ignore t :which-key "files")
-  "ff" '(counsel-find-file :which-key "find file")
-  "fr" '(counsel-recentf :which-key "find file")
-  "g" '(:ignore t :which-key "magit")
-  "gg" '(magit-status :which-key "magit status")
-  "m" '(:ignore t :which-key "modes")
-  "mw" '(which-key-mode :which-key "which key")
-  "p" '(:ignore t :which-key "projectile")
-  "pb" '(projectile-switch-to-buffer :which-key "switch buffer")
-  "pf" '(projectile-find-file :which-key "find file")
-  "pp" '(counsel-projectile-switch-project :which-key "switch projet")
-  "pK" '(projectile-kill-buffers :which-key "kill buffers")
-  "ps" '(projectile-save-project-buffers :which-key "save buffers")
-  "w" '(:ignore t :which-key "window")
-  "wv" '(evil-window-vsplit :which-key "window")
-  "wh" '(evil-window-split :which-key "window")
-  "t" '(:ignore t :which-key "test")
-  )
-;; TODO this pattern will give consistent and quick keybindings between language modes, though it's a little cumbersome.
-;; can write a macro to provide easy bindings for the common tasks.
-;; Run tests, type check, find symbol, format buffer (that should be hooked on save), go to definition, find usages
-(general-define-key
- :states '(normal visual insert emacs)
- :prefix "SPC"
- :non-normal-prefix "C-SPC"
- :keymaps 'emacs-lisp-mode-map
-  "ts" '(counsel-M-x :which-key "test lisp mode")
-)
+;; Format on save
+(defvar tdf/format-fn nil
+  "The format function to invoke for a given buffer/major mode.")
 
-(general-define-key
- :states '(normal visual insert emacs)
- :prefix "SPC"
- :non-normal-prefix "C-SPC"
- :keymaps 'sh-mode-map
- "ts" '(counsel-switch-buffer :which-key "test shell mode")
-)
+(defun tdf/format-buffer ()
+  "Run `tdf/format-fn'."
+  (funcall tdf/format-fn))
+
+(add-hook 'before-save-hook 'tdf/format-buffer)
+
+;; Keybindings
+(defmacro tdf/define-keys (&rest args)
+  "Defines keybindings on the SPC leader.
+The first item in ARGS should be the keymaps argument if necessary.
+The rest of ARGS should just be the keybinding format as expected by general."
+  `(general-define-key
+    :states '(normal visual insert emacs)
+    :prefix "SPC"
+    :non-normal-prefix "C-SPC"
+    ,@args))
+
+(tdf/define-keys
+ "SPC" '(counsel-M-x :which-key "M-x")
+ "/" '(counsel-projectile-rg :wich-key "rg")
+ ;; buffers
+ "b" '(:ignore t :which-key "buffer")
+ "bb" '(counsel-switch-buffer :which-key "switch buffer")
+ "bk" '(kill-current-buffer :which-key "kill buffer")
+ "bn" '(switch-to-next-buffer :which-key "next buffer")
+ "bp" '(switch-to-prev-buffer :which-key "previous buffer")
+ ;; dired
+ "d" '(:ignore t :which-key "dired")
+ ;; files
+ "f" '(:ignore t :which-key "files")
+ "ff" '(counsel-find-file :which-key "find file")
+ "fr" '(counsel-recentf :which-key "find file")
+ ;; git
+ "g" '(:ignore t :which-key "magit")
+ "gg" '(magit-status :which-key "magit status")
+ ;; modes
+ "m" '(:ignore t :which-key "modes")
+ "mw" '(which-key-mode :which-key "which key")
+ ;; projectile
+ "p" '(:ignore t :which-key "projectile")
+ "pb" '(projectile-switch-to-buffer :which-key "switch buffer")
+ "pf" '(projectile-find-file :which-key "find file")
+ "pp" '(counsel-projectile-switch-project :which-key "switch projet")
+ "pK" '(projectile-kill-buffers :which-key "kill buffers")
+ "ps" '(projectile-save-project-buffers :which-key "save buffers")
+ ;; windows
+ "w" '(:ignore t :which-key "window")
+ "wv" '(evil-window-vsplit :which-key "window")
+ "wh" '(evil-window-split :which-key "window")
+ )
 
 (defun tdf/comment-or-uncomment-region-or-line ()
-    "Comments or uncomments the region or the current line if there's no active region."
-    (interactive)
-    (let (beg end)
-        (if (region-active-p)
-            (setq beg (region-beginning) end (region-end))
-            (setq beg (line-beginning-position) end (line-end-position)))
-        (comment-or-uncomment-region beg end)
-        (next-line)))
+  "Comments or uncomments the region or the current line if there's no active region."
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)
+    (forward-line)))
 
 (general-define-key
  :states '(normal visual)
  :prefix "C-c"
-  ";" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
-  )
+ ";" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
+ )
 
 (general-define-key
  :keymaps '(ivy-occur-grep-mode-map)
@@ -91,3 +94,5 @@
  "C-e" '(ivy-wgrep-change-to-wgrep-mode :which-key "edit results"))
 
 (provide 'keybindings)
+
+;;; keybindings.el ends here
