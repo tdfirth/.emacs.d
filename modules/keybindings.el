@@ -79,6 +79,7 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "tw" '(which-key-mode :which-key "which key")
  ;; windows
  "w" '(:ignore t :which-key "window")
+ "w=" '(balance-windows :which-key "balance")
  "wh" '(evil-window-left :which-key "left")
  "wj" '(evil-window-down :which-key "down")
  "wk" '(evil-window-up :which-key "up")

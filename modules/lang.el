@@ -25,8 +25,13 @@
 
 ;; rs
 (use-package rust-mode
-  :config
-  (require 'rust-mode))
+  :hook (rust-mode . lsp))
+
+(use-package cargo
+  :hook (rust-mode . cargo-minor-mode))
+
+(use-package flycheck-rust
+  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (add-hook 'rust-mode-hook
           (lambda ()

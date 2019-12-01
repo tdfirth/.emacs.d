@@ -6,11 +6,14 @@
 
 (package-initialize)
 
-(defvar tdf/packages '(company
+(defvar tdf/packages '(cargo
+                       company
+                       company-lsp
                        counsel-projectile
                        evil
                        evil-magit
                        flycheck
+                       flycheck-rust
                        general
                        ivy
                        lsp-mode
@@ -42,6 +45,7 @@
       (package-install pkg))))
 
 ;; TODO manage own package list so that we can setup packages before emacs starts.
+;; TODO review all use-packages and put the appropriate commands option in to restrict the crap.
 (require 'use-package)
 
 (use-package solarized-theme
@@ -98,10 +102,15 @@
   ;; TODO look at the switch window hook in doom.
   )
 
+(use-package lsp-mode
+  :commands lsp
+  :config (require 'lsp-clients))
+
 (use-package magit
   :init
   (setq transient-levels-file (concat tdf-cache-dir "transient/levels.el")
-        transient-values-file (concat tdf-cache-dir "transient/values.el")))
+        transient-values-file (concat tdf-cache-dir "transient/values.el")
+        transient-history-file (concat tdf-cache-dir "transient/history.el")))
 
 (use-package smartparens
   :config

@@ -1,7 +1,8 @@
 ;;; init.el
 (setq user-full-name "Tom Firth"
       user-mail-address "thomas.d.firth@gmail.com")
-(setenv "PATH" (concat "/usr/local/bin:/opt/local/bin:/usr/bin:/bin" (getenv "PATH")))
+(setq user-home (substitute-in-file-name "$HOME/"))
+(setenv "PATH" (concat (concat user-home ".cargo/bin:") (concat "/usr/local/bin:/opt/local/bin:/usr/bin:/bin:" (getenv "PATH"))))
 (setq exec-path (append exec-path '("/usr/local/bin")))
 (require 'cl)
 
