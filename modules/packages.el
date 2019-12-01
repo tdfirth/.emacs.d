@@ -13,6 +13,7 @@
                        flycheck
                        general
                        ivy
+                       lsp-mode
                        magit
                        markdown-mode
                        org
@@ -180,6 +181,11 @@
 (use-package wgrep
   :config
   (setq wgrep-auto-save-buffer t))
+
+;; TODO can we use shackle to make things better?
+;; (use-package shackle
+;;   :config
+;;   (shackle-mode 1))
 
 (provide 'packages)
 ;;; packages.el ends here

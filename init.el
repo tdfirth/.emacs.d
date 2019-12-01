@@ -31,7 +31,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
 
-(add-to-list 'load-path (concat (file-name-directory load-file-name) "modules"))
+(add-to-list 'load-path tdf-module-dir)
 (require 'appearance)
 (require 'packages)
 (require 'keybindings)
