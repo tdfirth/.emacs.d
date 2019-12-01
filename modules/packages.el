@@ -1,5 +1,6 @@
 ;;; packages.el
 (require 'package)
+(require 'cl)
 (add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
 ;;(add-to-list 'package-archives (cons "melpa-stable" "https://stable.melpa.org/packages/") t)
 
@@ -24,9 +25,10 @@
                        wgrep
                        which-key
                        )
-  "Required packages")
+  "Required packages.")
 
 (defun tdf/packages-installed-p ()
+  "Check to see if a package is installed."
   (loop for pkg in tdf/packages
         when (not (package-installed-p pkg)) do (return nil)
         finally (return t)))
@@ -56,7 +58,11 @@
 
 (use-package company
   :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key company-search-map (kbd "C-n") 'company-select-next)
+  (define-key company-search-map (kbd "C-p") 'company-select-previous))
 
 (use-package flycheck
   :config
@@ -90,6 +96,11 @@
               (concat "^" (recentf-apply-filename-handlers tdf-local-dir))))
   ;; TODO look at the switch window hook in doom.
   )
+
+(use-package magit
+  :init
+  (setq transient-levels-file (concat tdf-cache-dir "transient/levels.el")
+        transient-values-file (concat tdf-cache-dir "transient/values.el")))
 
 (use-package smartparens
   :config
@@ -171,5 +182,4 @@
   (setq wgrep-auto-save-buffer t))
 
 (provide 'packages)
-
 ;;; packages.el ends here

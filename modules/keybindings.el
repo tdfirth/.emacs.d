@@ -83,7 +83,7 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "wj" '(evil-window-down :which-key "down")
  "wk" '(evil-window-up :which-key "up")
  "wl" '(evil-window-right :which-key "right")
- "ws" '(evil-window-left :which-key "split")
+ "ws" '(:ignore t :which-key "split")
  "wsv" '(evil-window-vsplit :which-key "vertical")
  "wsh" '(evil-window-split :which-key "horizontal")
  )
@@ -109,6 +109,11 @@ The rest of ARGS should just be the keybinding format as expected by general."
  :prefix "C-c"
  "C-e" '(ivy-wgrep-change-to-wgrep-mode :which-key "edit results"))
 
-(provide 'keybindings)
+;; Company
+;; (general-define-key
+;;  :keymaps 'company-active-map 'company-search-map
+;;  "C-n" '(company-select-next)
+;; "C-p" '(company-select-previous))
 
+(provide 'keybindings)
 ;;; keybindings.el ends here

@@ -15,7 +15,7 @@
 
 (delete-selection-mode t)
 (transient-mark-mode t)
-(setq x-select-enable-clipboard t)
+(setq select-enable-clipboard t)
 
 (global-hl-line-mode +1)
 ;; (global-display-line-numbers-mode)
@@ -35,5 +35,4 @@
               indent-tabs-mode nil)
 
 (provide 'appearance)
-
-;;; appearence.el ends here
+;;; appearance.el ends here

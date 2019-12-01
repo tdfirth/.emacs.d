@@ -9,6 +9,7 @@
  )
 
 (defun indent-buffer ()
+  "Indent an entire buffer."
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
@@ -37,4 +38,5 @@
 ;; ocaml
 
 
+(provide 'lang)
 ;;; lang.el ends here
