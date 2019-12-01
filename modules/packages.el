@@ -54,6 +54,21 @@
   (require 'evil-magit)
   (setq evil-magit-state 'normal))
 
+(use-package company
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package flycheck
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (add-to-list 'display-buffer-alist
+               `(,(rx bos "*Flycheck errors*" eos)
+                 (display-buffer-reuse-window
+                  display-buffer-in-side-window)
+                 (side            . bottom)
+                 (reusable-frames . visible)
+                 (window-height   . 0.33))))
+
 (use-package ivy
   :config
   (setq ivy-use-virtual-buffers t)

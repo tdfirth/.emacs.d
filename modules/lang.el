@@ -4,8 +4,8 @@
 ;; elisp
 (tdf/define-keys
  :keymaps 'emacs-lisp-mode-map
- "e" '(:ignore t :which-key "eval")
- "eb" '(eval-buffer :which-key "eval buffer")
+ "me" '(:ignore t :which-key "eval")
+ "meb" '(eval-buffer :which-key "eval buffer")
  )
 
 (defun indent-buffer ()
@@ -28,7 +28,11 @@
   (require 'rust-mode))
 
 (add-hook 'rust-mode-hook
-          (lambda () (setq indent-tabs-mode nil)))
+          (lambda ()
+            (progn
+              (setq indent-tabs-mode nil)
+              (setq tdf/format-fn 'rust-format-buffer)
+              )))
 
 ;; ocaml
 

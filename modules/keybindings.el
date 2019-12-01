@@ -40,7 +40,8 @@ The rest of ARGS should just be the keybinding format as expected by general."
 
 (tdf/define-keys
  "SPC" '(counsel-M-x :which-key "M-x")
- "/" '(counsel-projectile-rg :wich-key "rg")
+ "/" '(counsel-projectile-rg :which-key "rg")
+ "TAB" '(company-complete :which-key "complete")
  ;; buffers
  "b" '(:ignore t :which-key "buffer")
  "bb" '(counsel-switch-buffer :which-key "switch buffer")
@@ -49,6 +50,11 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "bp" '(switch-to-prev-buffer :which-key "previous buffer")
  ;; dired
  "d" '(:ignore t :which-key "dired")
+ ;; errors
+ "e" '(:ignore t :which-key "errors")
+ "el" '(flycheck-list-errors :which-key "list errors")
+ "en" '(flycheck-next-error :which-key "next error")
+ "ep" '(flycheck-previous-error :which-key "previous error")
  ;; files
  "f" '(:ignore t :which-key "files")
  "ff" '(counsel-find-file :which-key "find file")
@@ -56,9 +62,10 @@ The rest of ARGS should just be the keybinding format as expected by general."
  ;; git
  "g" '(:ignore t :which-key "magit")
  "gg" '(magit-status :which-key "magit status")
- ;; modes
- "m" '(:ignore t :which-key "modes")
- "mw" '(which-key-mode :which-key "which key")
+ ;; major mode
+ "m" '(:ignore t :which-key "toggle")
+ ;; org mode
+ "o" '(:ignore t :which-key "toggle")
  ;; projectile
  "p" '(:ignore t :which-key "projectile")
  "pb" '(projectile-switch-to-buffer :which-key "switch buffer")
@@ -66,10 +73,19 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "pp" '(counsel-projectile-switch-project :which-key "switch projet")
  "pK" '(projectile-kill-buffers :which-key "kill buffers")
  "ps" '(projectile-save-project-buffers :which-key "save buffers")
+ ;; toggle
+ "t" '(:ignore t :which-key "toggle")
+ "tt" '(load-theme :which-key "theme")
+ "tw" '(which-key-mode :which-key "which key")
  ;; windows
  "w" '(:ignore t :which-key "window")
- "wv" '(evil-window-vsplit :which-key "window")
- "wh" '(evil-window-split :which-key "window")
+ "wh" '(evil-window-left :which-key "left")
+ "wj" '(evil-window-down :which-key "down")
+ "wk" '(evil-window-up :which-key "up")
+ "wl" '(evil-window-right :which-key "right")
+ "ws" '(evil-window-left :which-key "split")
+ "wsv" '(evil-window-vsplit :which-key "vertical")
+ "wsh" '(evil-window-split :which-key "horizontal")
  )
 
 (defun tdf/comment-or-uncomment-region-or-line ()
