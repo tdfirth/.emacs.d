@@ -50,8 +50,7 @@
 (require 'use-package)
 
 ;; Set up exec path etc with exec-path-from-shell
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+(exec-path-from-shell-initialize)
 
 (use-package solarized-theme
   :config
@@ -111,7 +110,9 @@
 
 (use-package lsp-mode
   :commands lsp
-  :config (require 'lsp-clients))
+  :config
+  (require 'lsp-clients)
+  (setq lsp-session-file (concat tdf-cache-dir "lsp/session")))
 
 (use-package magit
   :init
