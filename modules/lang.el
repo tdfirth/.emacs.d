@@ -6,6 +6,7 @@
  :keymaps 'emacs-lisp-mode-map
  "me" '(:ignore t :which-key "eval")
  "meb" '(eval-buffer :which-key "eval buffer")
+ "mer" '(eval-region :which-key "eval region")
  )
 
 (defun indent-buffer ()

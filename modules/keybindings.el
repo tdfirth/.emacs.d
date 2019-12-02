@@ -27,6 +27,17 @@
 
 (add-hook 'before-save-hook 'tdf/format-buffer)
 
+;; Comment/uncomment
+(defun tdf/comment-or-uncomment-region-or-line ()
+  "Comments or uncomments the region or the current line if there's no active region."
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)
+    (forward-line)))
+
 ;; Keybindings
 (defmacro tdf/define-keys (&rest args)
   "Defines keybindings on the SPC leader.
@@ -42,6 +53,7 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "SPC" '(counsel-M-x :which-key "M-x")
  "/" '(counsel-projectile-rg :which-key "rg")
  "TAB" '(company-complete :which-key "complete")
+ ";" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
  ;; buffers
  "b" '(:ignore t :which-key "buffer")
  "bb" '(counsel-switch-buffer :which-key "switch buffer")
@@ -89,32 +101,17 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "wsh" '(evil-window-split :which-key "horizontal")
  )
 
-(defun tdf/comment-or-uncomment-region-or-line ()
-  "Comments or uncomments the region or the current line if there's no active region."
-  (interactive)
-  (let (beg end)
-    (if (region-active-p)
-        (setq beg (region-beginning) end (region-end))
-      (setq beg (line-beginning-position) end (line-end-position)))
-    (comment-or-uncomment-region beg end)
-    (forward-line)))
-
+;; Some keybindings for classic emacs features... feels right to put them under C-c :)
 (general-define-key
  :states '(normal visual)
  :prefix "C-c"
- ";" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
- )
+ "a" '(counsel-apropos :which-key "apropos")
+ "e" '(eval-expression :which-key "eval expression"))
 
 (general-define-key
  :keymaps '(ivy-occur-grep-mode-map)
  :prefix "C-c"
  "C-e" '(ivy-wgrep-change-to-wgrep-mode :which-key "edit results"))
-
-;; Company
-;; (general-define-key
-;;  :keymaps 'company-active-map 'company-search-map
-;;  "C-n" '(company-select-next)
-;; "C-p" '(company-select-previous))
 
 (provide 'keybindings)
 ;;; keybindings.el ends here

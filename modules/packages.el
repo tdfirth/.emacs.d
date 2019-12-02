@@ -12,6 +12,7 @@
                        counsel-projectile
                        evil
                        evil-magit
+                       exec-path-from-shell
                        flycheck
                        flycheck-rust
                        general
@@ -47,6 +48,10 @@
 ;; TODO manage own package list so that we can setup packages before emacs starts.
 ;; TODO review all use-packages and put the appropriate commands option in to restrict the crap.
 (require 'use-package)
+
+;; Set up exec path etc with exec-path-from-shell
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (use-package solarized-theme
   :config
@@ -90,6 +95,7 @@
 
 (use-package recentf
   :config
+  (recentf-mode 1)
   (setq recentf-save-file (concat tdf-cache-dir "recentf")
         recentf-auto-cleanup 'never
         recentf-max-menu-items 0
@@ -97,8 +103,9 @@
         recentf-exclude
         (list "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$" "^/tmp/" "^/ssh:"
               "\\.?ido\\.last$" "\\.revive$" "/TAGS$" "^/var/folders/.+$"
+              "\\.git/"
               ;; ignore private temp files
-              (concat "^" (recentf-apply-filename-handlers tdf-local-dir))))
+              (concat "^" (recentf-apply-filename-handlers (file-truename tdf-local-dir)))))
   ;; TODO look at the switch window hook in doom.
   )
 

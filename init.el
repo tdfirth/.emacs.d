@@ -1,22 +1,20 @@
 ;;; init.el
-(setq user-full-name "Tom Firth"
-      user-mail-address "thomas.d.firth@gmail.com")
-(setq user-home (substitute-in-file-name "$HOME/"))
-(setenv "PATH" (concat (concat user-home ".cargo/bin:") (concat "/usr/local/bin:/opt/local/bin:/usr/bin:/bin:" (getenv "PATH"))))
-(setq exec-path (append exec-path '("/usr/local/bin")))
 (require 'cl)
 
-;; performance
+(setq user-full-name "Tom Firth"
+      user-mail-address "thomas.d.firth@gmail.com")
+
+;; startup performance
 (setq gc-cons-threshold most-positive-fixnum)
 (setq large-file-warning-threshold 100000000)
 
-;; encoding
+;; editor
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
-;; editor
+(defvar user-home (substitute-in-file-name "$HOME/"))
 (defconst tdf-emacs-dir user-emacs-directory)
 (defconst tdf-module-dir (concat tdf-emacs-dir "modules"))
 (defconst tdf-local-dir (concat tdf-emacs-dir ".local/"))
@@ -32,7 +30,11 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
 
+;; (loop for path in (list (concat user-home ".cargo/bin"), "/usr/local/bin")
+;;       do (setq exec-path (append path exec-path)))
+
 (add-to-list 'load-path tdf-module-dir)
+
 (require 'appearance)
 (require 'packages)
 (require 'keybindings)
