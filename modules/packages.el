@@ -23,10 +23,12 @@
                        org
                        perspective
                        projectile
+                       pyvenv
                        rust-mode
                        smartparens
                        solarized-theme
                        use-package
+                       yasnippet
                        wgrep
                        which-key
                        )
@@ -51,6 +53,7 @@
 
 ;; Set up exec path etc with exec-path-from-shell
 (exec-path-from-shell-initialize)
+(exec-path-from-shell-copy-env "WORKON_HOME")
 
 (use-package solarized-theme
   :config
@@ -66,8 +69,8 @@
   (setq evil-magit-state 'normal))
 
 (use-package company
+  :hook (after-init-hook global-company-mode)
   :config
-  (add-hook 'after-init-hook 'global-company-mode)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   (define-key company-search-map (kbd "C-n") 'company-select-next)
@@ -108,11 +111,25 @@
   ;; TODO look at the switch window hook in doom.
   )
 
-(use-package lsp-mode
-  :commands lsp
+(use-package yasnippet
   :config
-  (require 'lsp-clients)
-  (setq lsp-session-file (concat tdf-cache-dir "lsp/session")))
+  (yas-global-mode 1))
+
+(use-package lsp-mode
+  :commands lsp-deferred
+  :hook ((python-mode-hook . lsp-deferred) (rust-mode-hook . lsp-deferred))
+  :config
+  (setq lsp-session-file (concat tdf-cache-dir "lsp/session"))
+  (setq lsp-prefer-flymake nil))
+
+(use-package company-lsp
+  :commands company-lsp
+  :config
+  (push 'company-lsp company-backends)
+  (setq company-transformers nil
+        company-lsp-async t
+        company-lsp-enable-snippet t
+        company-lsp-cache-candidates nil))
 
 (use-package magit
   :init

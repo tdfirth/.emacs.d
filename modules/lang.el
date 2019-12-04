@@ -22,11 +22,20 @@
 
 
 ;; py
+(tdf/define-keys
+ :keymaps 'python-mode-map
+ "mv" '(:ignore t :which-key "virtualenvs")
+ "mva" '(pyvenv-activate :which-key "activate")
+ "mvw" '(pyvenv-workon :which-key "workon")
+ )
 
+(add-hook 'python-mode-hook
+          (lambda ()
+            (progn
+              (setq tdf/format-fn 'lsp-format-buffer))))
 
 ;; rs
-(use-package rust-mode
-  :hook (rust-mode . lsp))
+(use-package rust-mode)
 
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))

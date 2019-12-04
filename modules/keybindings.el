@@ -74,6 +74,10 @@ The rest of ARGS should just be the keybinding format as expected by general."
  ;; git
  "g" '(:ignore t :which-key "magit")
  "gg" '(magit-status :which-key "magit status")
+ ;; lsp
+ "l" '(:ignore t :which-key "lsp")
+ "ld" '(lsp-find-definition :which-key "lsp")
+ "lr" '(lsp-find-references :which-key "lsp")
  ;; major mode
  "m" '(:ignore t :which-key "toggle")
  ;; org mode
