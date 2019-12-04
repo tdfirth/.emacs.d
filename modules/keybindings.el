@@ -56,7 +56,7 @@ The rest of ARGS should just be the keybinding format as expected by general."
  ";" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
  ;; buffers
  "b" '(:ignore t :which-key "buffer")
- "bb" '(counsel-switch-buffer :which-key "switch buffer")
+ "bb" '(ivy-switch-buffer :which-key "switch buffer")
  "bk" '(kill-current-buffer :which-key "kill buffer")
  "bn" '(switch-to-next-buffer :which-key "next buffer")
  "bp" '(switch-to-prev-buffer :which-key "previous buffer")
@@ -76,8 +76,9 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "gg" '(magit-status :which-key "magit status")
  ;; lsp
  "l" '(:ignore t :which-key "lsp")
- "ld" '(lsp-find-definition :which-key "lsp")
- "lr" '(lsp-find-references :which-key "lsp")
+ "ld" '(lsp-find-definition :which-key "definition")
+ "lr" '(lsp-rename :which-key "rename")
+ "lu" '(lsp-find-references :which-key "uses")
  ;; major mode
  "m" '(:ignore t :which-key "toggle")
  ;; org mode

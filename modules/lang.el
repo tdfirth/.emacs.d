@@ -29,13 +29,44 @@
  "mvw" '(pyvenv-workon :which-key "workon")
  )
 
+(defun tdf/pyvenv-autoload ()
+  "Automatically load the virtual environment specified in a .venv file."
+  (require 'projectile)
+  (let* ((pdir (projectile-project-root)) (pfile (concat pdir ".venv")))
+    (if (file-exists-p pfile)
+        (pyvenv-workon (with-temp-buffer
+                         (insert-file-contents pfile)
+                         (nth 0 (split-string (buffer-string))))))))
+
 (add-hook 'python-mode-hook
           (lambda ()
             (progn
+              (pyvenv-mode)
+              (tdf/pyvenv-autoload)
+              (lsp)
               (setq tdf/format-fn 'lsp-format-buffer))))
 
 ;; rs
 (use-package rust-mode)
+
+(defun tdf/cargo-process-run ()
+  "Build and run Rust code."
+  (interactive)
+  (cargo-process-run)
+  (let ((orig-win (selected-window))
+        (run-win
+         (display-buffer (get-buffer "*Cargo Run*") nil 'visible)))
+    (select-window run-win)
+    (comint-mode)
+    (read-only-mode 0)
+    (select-window orig-win)))
+
+(tdf/define-keys
+ :keymaps 'rust-mode-map
+ "mc" '(:ignore t :which-key "cargo")
+ "mcr" '(tdf/cargo-process-run :which-key "run")
+ "mcb" '(cargo-process-build :which-key "build")
+ )
 
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
@@ -47,8 +78,8 @@
           (lambda ()
             (progn
               (setq indent-tabs-mode nil)
-              (setq tdf/format-fn 'rust-format-buffer)
-              )))
+              (lsp)
+              (setq tdf/format-fn 'rust-format-buffer))))
 
 ;; ocaml
 

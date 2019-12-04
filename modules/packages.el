@@ -18,6 +18,7 @@
                        general
                        ivy
                        lsp-mode
+                       lsp-ui
                        magit
                        markdown-mode
                        org
@@ -91,8 +92,7 @@
   :config
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
-  (setq ivy-height 20)
-  (setq ivy-display-style 'fancy)
+  (setq ivy-height 10)
   (ivy-mode 1))
 
 (use-package recentf
@@ -116,11 +116,26 @@
   (yas-global-mode 1))
 
 (use-package lsp-mode
-  :commands lsp-deferred
-  :hook ((python-mode-hook . lsp-deferred) (rust-mode-hook . lsp-deferred))
+  :commands lsp
   :config
   (setq lsp-session-file (concat tdf-cache-dir "lsp/session"))
   (setq lsp-prefer-flymake nil))
+
+(use-package lsp-ui
+  :requires lsp-mode flycheck
+  :hook (lsp-mode-hook . lsp-ui-mode)
+  :config
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-use-childframe t
+        lsp-ui-doc-position 'top
+        lsp-ui-doc-include-signature t
+        lsp-ui-sideline-enable nil
+        lsp-ui-flycheck-enable t
+        lsp-ui-flycheck-list-position 'right
+        lsp-ui-flycheck-live-reporting t
+        lsp-ui-peek-enable t
+        lsp-ui-peek-list-width 60
+        lsp-ui-peek-peek-height 25))
 
 (use-package company-lsp
   :commands company-lsp
