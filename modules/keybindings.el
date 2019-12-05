@@ -53,6 +53,7 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "SPC" '(counsel-M-x :which-key "M-x")
  "/" '(counsel-projectile-rg :which-key "rg")
  "TAB" '(company-complete :which-key "complete")
+ "`" '(shell-command :which-key "shell")
  ";" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
  ;; buffers
  "b" '(:ignore t :which-key "buffer")
