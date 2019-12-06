@@ -63,9 +63,12 @@
 
 (tdf/define-keys
  :keymaps 'rust-mode-map
- "mc" '(:ignore t :which-key "cargo")
- "mcr" '(tdf/cargo-process-run :which-key "run")
- "mcb" '(cargo-process-build :which-key "build")
+ "mr" '(tdf/cargo-process-run :which-key "run")
+ "mb" '(cargo-process-build :which-key "build")
+ "mt" '(:ignore t :which-key "test")
+ "mtt" '(cargo-process-current-test :which-key "current")
+ "mtf" '(cargo-process-current-file-tests :which-key "file")
+ "mtp" '(cargo-process-test :which-key "project")
  )
 
 (use-package cargo
