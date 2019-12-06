@@ -6,10 +6,12 @@
 
 (package-initialize)
 
-(defvar tdf/packages '(cargo
+(defvar tdf/packages '(
+                       cargo
                        company
                        company-lsp
                        counsel-projectile
+                       dap-mode
                        evil
                        evil-magit
                        exec-path-from-shell
@@ -28,6 +30,7 @@
                        rust-mode
                        smartparens
                        solarized-theme
+                       tuareg
                        use-package
                        yasnippet
                        wgrep
