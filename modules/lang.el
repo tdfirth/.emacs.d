@@ -1,14 +1,10 @@
-;;; lang.el
+;;; lang.el --- Language support.
+;;; Commentary:
+;;; Each language gets it's own little section...
 (require 'keybindings)
 
+;;; Code:
 ;; elisp
-(tdf/define-keys
- :keymaps 'emacs-lisp-mode-map
- "me" '(:ignore t :which-key "eval")
- "meb" '(eval-buffer :which-key "eval buffer")
- "mer" '(eval-region :which-key "eval region")
- )
-
 (defun indent-buffer ()
   "Indent an entire buffer."
   (interactive)
@@ -17,16 +13,16 @@
 
 (setq tdf/format-fn 'indent-buffer)
 
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
 
 ;; go
 
-
 ;; py
-(tdf/define-keys
+(tdf/define-ctrl-c-keys
  :keymaps 'python-mode-map
- "mv" '(:ignore t :which-key "virtualenvs")
- "mva" '(pyvenv-activate :which-key "activate")
- "mvw" '(pyvenv-workon :which-key "workon")
+ "C-v" '(:ignore t :which-key "virtualenvs")
+ "C-v a" '(pyvenv-activate :which-key "activate")
+ "C-v w" '(pyvenv-workon :which-key "workon")
  )
 
 (defun tdf/pyvenv-autoload ()
@@ -61,7 +57,7 @@
     (read-only-mode 0)
     (select-window orig-win)))
 
-(tdf/define-keys
+(tdf/define-spc-keys
  :keymaps 'rust-mode-map
  "mr" '(tdf/cargo-process-run :which-key "run")
  "mb" '(cargo-process-build :which-key "build")

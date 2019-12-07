@@ -1,6 +1,9 @@
-;;; keybindings.el
+;;; keybindings.el --- Keybindings.
+;;; Commentary:
+;;; Core navigation/language keybindings and support code.
+;;; Code:
 (defvar tdf/escape-hook nil
-  "A hook run when C-g is pressed (or ESC in normal mode, for evil users.")
+  "A hook run when \\[keyboard-quit] is pressed (or ESC in normal mode, for evil users.")
 
 (defun tdf/escape ()
   "Run `tdf-escape-hook'."
@@ -39,8 +42,8 @@
     (forward-line)))
 
 ;; Keybindings
-(defmacro tdf/define-keys (&rest args)
-  "Defines keybindings on the SPC leader.
+(defmacro tdf/define-spc-keys (&rest args)
+  "Defines keybindings on the SPC leader for navigation.
 The first item in ARGS should be the keymaps argument if necessary.
 The rest of ARGS should just be the keybinding format as expected by general."
   `(general-define-key
@@ -49,12 +52,12 @@ The rest of ARGS should just be the keybinding format as expected by general."
     :non-normal-prefix "C-SPC"
     ,@args))
 
-(tdf/define-keys
+(tdf/define-spc-keys
  "SPC" '(counsel-M-x :which-key "M-x")
  "/" '(counsel-projectile-rg :which-key "rg")
- "TAB" '(company-complete :which-key "complete")
  "`" '(shell-command :which-key "shell")
- ";" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
+ ;; apropos
+ "a" '(counsel-apropos :which-key "apropos")
  ;; buffers
  "b" '(:ignore t :which-key "buffer")
  "bb" '(ivy-switch-buffer :which-key "switch buffer")
@@ -63,11 +66,11 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "bp" '(switch-to-prev-buffer :which-key "previous buffer")
  ;; dired
  "d" '(:ignore t :which-key "dired")
- ;; errors
- "e" '(:ignore t :which-key "errors")
- "el" '(flycheck-list-errors :which-key "list errors")
- "en" '(flycheck-next-error :which-key "next error")
- "ep" '(flycheck-previous-error :which-key "previous error")
+ ;; elisp
+ "e" '(:ignore t :which-key "elisp")
+ "ee" '(eval-expression :which-key "eval expression")
+ "eb" '(eval-buffer :which-key "eval buffer")
+ "er" '(eval-region :which-key "eval region")
  ;; files
  "f" '(:ignore t :which-key "files")
  "ff" '(counsel-find-file :which-key "find file")
@@ -75,11 +78,6 @@ The rest of ARGS should just be the keybinding format as expected by general."
  ;; git
  "g" '(:ignore t :which-key "magit")
  "gg" '(magit-status :which-key "magit status")
- ;; lsp
- "l" '(:ignore t :which-key "lsp")
- "ld" '(lsp-find-definition :which-key "definition")
- "lr" '(lsp-rename :which-key "rename")
- "lu" '(lsp-find-references :which-key "uses")
  ;; major mode
  "m" '(:ignore t :which-key "toggle")
  ;; org mode
@@ -107,12 +105,33 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "wsh" '(evil-window-split :which-key "horizontal")
  )
 
-;; Some keybindings for classic emacs features... feels right to put them under C-c :)
-(general-define-key
- :states '(normal visual)
- :prefix "C-c"
- "a" '(counsel-apropos :which-key "apropos")
- "e" '(eval-expression :which-key "eval expression"))
+(defmacro tdf/define-ctrl-c-keys (&rest args)
+  "Defines keybindings on the C-c leader. I use all of these language 
+related bindings.  The first item in ARGS should be the keymaps argument if 
+necessary.  The rest of ARGS should just be the keybinding format as expected 
+by general."
+  `(general-define-key
+    :states '(normal visual insert emacs)
+    :prefix "C-c"
+    ,@args))
+
+(tdf/define-ctrl-c-keys
+ "RET" '(company-complete :which-key "complete")
+ "C-;" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
+ ;; errors
+ "C-e" '(:ignore t :which-key "errors")
+ "C-e l" '(flycheck-list-errors :which-key "list errors")
+ "C-e n" '(flycheck-next-error :which-key "next error")
+ "C-e p" '(flycheck-previous-error :which-key "previous error")
+ ;; goto
+ "C-g" '(:ignore t :which-key "goto")
+ "C-g d" '(lsp-find-definition :which-key "definition")
+ "C-g u" '(lsp-find-references :which-key "uses")
+ ;; rename
+ "C-r" '(lsp-rename :which-key "lsp rename")
+ ;; test
+ "C-t" '(:ignore t :which-key "test")
+ )
 
 (general-define-key
  :keymaps '(ivy-occur-grep-mode-map)
