@@ -81,7 +81,11 @@
               (setq tdf/format-fn 'rust-format-buffer))))
 
 ;; ocaml
-
+(add-hook 'tuareg-mode-hook
+          (lambda ()
+            (progn
+              (merlin-mode)
+              (lsp))))
 
 (provide 'lang)
 ;;; lang.el ends here

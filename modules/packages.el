@@ -23,6 +23,7 @@
                        lsp-ui
                        magit
                        markdown-mode
+                       merlin
                        org
                        perspective
                        projectile
@@ -120,6 +121,7 @@
 
 (use-package lsp-mode
   :commands lsp
+  :custom (lsp-log-max 100000)
   :config
   (setq lsp-session-file (concat tdf-cache-dir "lsp/session"))
   (setq lsp-prefer-flymake nil))
@@ -128,17 +130,9 @@
   :requires lsp-mode flycheck
   :hook (lsp-mode-hook . lsp-ui-mode)
   :config
-  (setq lsp-ui-doc-enable t
-        lsp-ui-doc-use-childframe t
-        lsp-ui-doc-position 'top
-        lsp-ui-doc-include-signature t
+  (setq lsp-ui-doc-position 'bottom
         lsp-ui-sideline-enable nil
-        lsp-ui-flycheck-enable t
-        lsp-ui-flycheck-list-position 'right
-        lsp-ui-flycheck-live-reporting t
-        lsp-ui-peek-enable t
-        lsp-ui-peek-list-width 60
-        lsp-ui-peek-peek-height 25))
+        lsp-ui-peek-peek-height 5))
 
 (use-package company-lsp
   :commands company-lsp
