@@ -31,6 +31,9 @@
                        rust-mode
                        smartparens
                        solarized-theme
+                       treemacs
+                       treemacs-evil
+                       treemacs-projectile
                        tuareg
                        use-package
                        yasnippet
@@ -222,6 +225,21 @@
   :config
   (projectile-mode 1)
   (setq projectile-completion-system 'ivy))
+
+(use-package treemacs
+  :config
+  (progn
+    (setq treemacs-persist-file (concat tdf-cache-dir "treemacs-persist"))
+    (setq treemacs-follow-mode nil)
+    (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)))
+
+(use-package treemacs-evil
+  :after treemacs evil
+  :ensure t)
+
+(use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
 
 ;; wgrep
 (use-package wgrep

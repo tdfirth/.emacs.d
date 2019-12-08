@@ -47,7 +47,7 @@
 The first item in ARGS should be the keymaps argument if necessary.
 The rest of ARGS should just be the keybinding format as expected by general."
   `(general-define-key
-    :states '(normal visual insert emacs)
+    :states '(normal visual insert emacs treemacs)
     :prefix "SPC"
     :non-normal-prefix "C-SPC"
     ,@args))
@@ -79,7 +79,9 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "g" '(:ignore t :which-key "magit")
  "gg" '(magit-status :which-key "magit status")
  ;; major mode
- "m" '(:ignore t :which-key "toggle")
+ "m" '(:ignore t :which-key "modes")
+ "mt" '(load-theme :which-key "theme")
+ "mw" '(which-key-mode :which-key "which key")
  ;; org mode
  "o" '(:ignore t :which-key "toggle")
  ;; projectile
@@ -89,10 +91,13 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "pp" '(counsel-projectile-switch-project :which-key "switch projet")
  "pK" '(projectile-kill-buffers :which-key "kill buffers")
  "ps" '(projectile-save-project-buffers :which-key "save buffers")
- ;; toggle
- "t" '(:ignore t :which-key "toggle")
- "tt" '(load-theme :which-key "theme")
- "tw" '(which-key-mode :which-key "which key")
+ ;; treemacs
+ "t" '(:ignore t :which-key "treemacs")
+ "tf" '(treemacs-find-file :which-key "find file")
+ "tp" '(:ignore t :which-key "projectile")
+ "tpa" '(treemacs-projectil :which-key "add project")
+ "tpr" '(treemacs-remove-project-from-workspace :which-key "remove project")
+ "tt" '(treemacs :which-key "treemacs")
  ;; windows
  "w" '(:ignore t :which-key "window")
  "w=" '(balance-windows :which-key "balance")
@@ -106,9 +111,9 @@ The rest of ARGS should just be the keybinding format as expected by general."
  )
 
 (defmacro tdf/define-ctrl-c-keys (&rest args)
-  "Defines keybindings on the C-c leader. I use all of these language 
-related bindings.  The first item in ARGS should be the keymaps argument if 
-necessary.  The rest of ARGS should just be the keybinding format as expected 
+  "Defines keybindings on the C-c leader. I use all of these language
+related bindings.  The first item in ARGS should be the keymaps argument if
+necessary.  The rest of ARGS should just be the keybinding format as expected
 by general."
   `(general-define-key
     :states '(normal visual insert emacs)
