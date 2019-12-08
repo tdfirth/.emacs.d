@@ -11,12 +11,29 @@
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
 
-(setq tdf/format-fn 'indent-buffer)
 
-(add-hook 'emacs-lisp-mode-hook 'company-mode)
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (progn
+              (company-mode))))
 
 ;; go
+(use-package go-mode
+  :mode ("\\.go\\'" . go-mode))
 
+(tdf/define-ctrl-c-keys
+ :keymaps 'go-mode-map
+ "C-m r" '(:ignore t :which-key "run")
+ "C-m b" '(:ignore t :which-key "build")
+ "C-t t" '(cargo-process-current-test :which-key "current")
+ "C-t f" '(cargo-process-current-file-tests :which-key "file")
+ "C-t p" '(cargo-process-test :which-key "project")
+ )
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (progn
+              (lsp))))
 ;; py
 (tdf/define-ctrl-c-keys
  :keymaps 'python-mode-map
@@ -39,8 +56,7 @@
             (progn
               (pyvenv-mode)
               (tdf/pyvenv-autoload)
-              (lsp)
-              (setq tdf/format-fn 'lsp-format-buffer))))
+              (lsp))))
 
 ;; rs
 (use-package rust-mode)
@@ -57,14 +73,13 @@
     (read-only-mode 0)
     (select-window orig-win)))
 
-(tdf/define-spc-keys
+(tdf/define-ctrl-c-keys
  :keymaps 'rust-mode-map
- "mr" '(tdf/cargo-process-run :which-key "run")
- "mb" '(cargo-process-build :which-key "build")
- "mt" '(:ignore t :which-key "test")
- "mtt" '(cargo-process-current-test :which-key "current")
- "mtf" '(cargo-process-current-file-tests :which-key "file")
- "mtp" '(cargo-process-test :which-key "project")
+ "C-m r" '(tdf/cargo-process-run :which-key "run")
+ "C-m b" '(cargo-process-build :which-key "build")
+ "C-t t" '(cargo-process-current-test :which-key "current")
+ "C-t f" '(cargo-process-current-file-tests :which-key "file")
+ "C-t p" '(cargo-process-test :which-key "project")
  )
 
 (use-package cargo
@@ -77,8 +92,7 @@
           (lambda ()
             (progn
               (setq indent-tabs-mode nil)
-              (lsp)
-              (setq tdf/format-fn 'rust-format-buffer))))
+              (lsp))))
 
 ;; ocaml
 (add-hook 'tuareg-mode-hook

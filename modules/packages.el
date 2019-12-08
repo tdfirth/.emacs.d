@@ -18,6 +18,7 @@
                        flycheck
                        flycheck-rust
                        general
+                       go-mode
                        ivy
                        lsp-mode
                        lsp-ui

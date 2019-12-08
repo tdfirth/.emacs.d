@@ -21,12 +21,12 @@
 (global-set-key [remap keyboard-quit] #'tdf/escape)
 
 ;; Format on save
-(defvar tdf/format-fn nil
-  "The format function to invoke for a given buffer/major mode.")
-
 (defun tdf/format-buffer ()
-  "Run `tdf/format-fn'."
-  (funcall tdf/format-fn))
+  "Format buffers before saving."
+  (cond
+   ((member major-mode '(py-mode rust-mode go-mode tuareg-mode)) (lsp-format-buffer))
+   (t (indent-buffer)))
+  nil)
 
 (add-hook 'before-save-hook 'tdf/format-buffer)
 
@@ -128,14 +128,17 @@ by general."
  "C-e l" '(flycheck-list-errors :which-key "list errors")
  "C-e n" '(flycheck-next-error :which-key "next error")
  "C-e p" '(flycheck-previous-error :which-key "previous error")
- ;; goto
- "C-g" '(:ignore t :which-key "goto")
- "C-g d" '(lsp-find-definition :which-key "definition")
- "C-g u" '(lsp-find-references :which-key "uses")
+ ;; find
+ "C-f" '(:ignore t :which-key "goto")
+ "C-f d" '(lsp-find-definition :which-key "definition")
+ "C-f u" '(lsp-find-references :which-key "uses")
+ "C-f i" '(lsp-ui-imenu :which-key "imenu")
+ ;; make
+ "C-m" '(:ignore t :which-key "make")
  ;; rename
  "C-r" '(lsp-rename :which-key "lsp rename")
  ;; test
- "C-t" '(:ignore t :which-key "test")
+ "C-t" '(:ignore  :which-key "test")
  )
 
 (general-define-key
