@@ -95,7 +95,7 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "t" '(:ignore t :which-key "treemacs")
  "tf" '(treemacs-find-file :which-key "find file")
  "tp" '(:ignore t :which-key "projectile")
- "tpa" '(treemacs-projectil :which-key "add project")
+ "tpa" '(treemacs-projectile :which-key "add project")
  "tpr" '(treemacs-remove-project-from-workspace :which-key "remove project")
  "tt" '(treemacs :which-key "treemacs")
  ;; windows

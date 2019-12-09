@@ -3,6 +3,10 @@
 ;;; Each language gets it's own little section...
 (require 'keybindings)
 
+(defmacro tdf/lang-hook (hook &rest args)
+  "Execute ARGS on HOOK."
+  `(add-hook ,hook (lambda () (progn ,@args))))
+
 ;;; Code:
 ;; elisp
 (defun indent-buffer ()
@@ -12,10 +16,8 @@
     (indent-region (point-min) (point-max) nil)))
 
 
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (progn
-              (company-mode))))
+(tdf/lang-hook 'emacs-lisp-mode-hook
+               (company-mode))
 
 ;; go
 (use-package go-mode
@@ -30,10 +32,8 @@
  "C-t p" '(cargo-process-test :which-key "project")
  )
 
-(add-hook 'go-mode-hook
-          (lambda ()
-            (progn
-              (lsp))))
+(tdf/lang-hook 'go-mode-hook
+               (lsp))
 ;; py
 (tdf/define-ctrl-c-keys
  :keymaps 'python-mode-map
@@ -51,12 +51,10 @@
                          (insert-file-contents pfile)
                          (nth 0 (split-string (buffer-string))))))))
 
-(add-hook 'python-mode-hook
-          (lambda ()
-            (progn
-              (pyvenv-mode)
-              (tdf/pyvenv-autoload)
-              (lsp))))
+(tdf/lang-hook 'python-mode-hook
+               (pyvenv-mode)
+               (tdf/pyvenv-autoload)
+               (lsp))
 
 ;; rs
 (use-package rust-mode)
@@ -88,18 +86,34 @@
 (use-package flycheck-rust
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
-(add-hook 'rust-mode-hook
-          (lambda ()
-            (progn
-              (setq indent-tabs-mode nil)
-              (lsp))))
+(tdf/lang-hook 'rust-mode-hook
+               (setq indent-tabs-mode nil)
+               (lsp))
 
 ;; ocaml
-(add-hook 'tuareg-mode-hook
-          (lambda ()
-            (progn
-              (merlin-mode)
-              (lsp))))
+(tdf/lang-hook 'tuareg-mode-hook
+               (merlin-mode)
+               (lsp))
+
+;; reason
+(tdf/lang-hook 'reason-mode-hook
+               (merlin-mode)
+               (lsp))
+
+;; docker
+(tdf/lang-hook 'dockerfile-mode-hook
+               (lsp))
+
+;; html
+(tdf/lang-hook 'html-mode-hook
+               (lsp))
+;; css
+(tdf/lang-hook 'css-mode-hook
+               (lsp))
+
+;; html
+(tdf/lang-hook 'yaml-mode-hook
+               (lsp))
 
 (provide 'lang)
 ;;; lang.el ends here

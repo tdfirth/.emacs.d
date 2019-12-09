@@ -1,8 +1,19 @@
-;;; packages.el
+;;; packages.el --- Package list and config.
+;;; Commentary:
+;;; Structured pretty crudely, just add a package to the big list and
+;;; add any config you need with use-package.
+;;; Code:
 (require 'package)
 (require 'cl)
 (add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
-;;(add-to-list 'package-archives (cons "melpa-stable" "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives (cons "melpa-stable" "https://stable.melpa.org/packages/") t)
+
+;; TODO look at imenu further and customise
+;; TODO setup dap mode with lsp
+;; TODO setup docker and docker-mode with lsp
+;; TODO set up reason ml with lsp
+;; TODO set up c and c++ with lsp
+;; TODO set up yaml files with lsp
 
 (package-initialize)
 
@@ -12,6 +23,8 @@
                        company-lsp
                        counsel-projectile
                        dap-mode
+                       docker
+                       dockerfile-mode
                        evil
                        evil-magit
                        exec-path-from-shell
@@ -29,6 +42,7 @@
                        perspective
                        projectile
                        pyvenv
+                       reason-mode
                        rust-mode
                        smartparens
                        solarized-theme
@@ -37,6 +51,7 @@
                        treemacs-projectile
                        tuareg
                        use-package
+                       yaml-mode
                        yasnippet
                        wgrep
                        which-key
@@ -121,14 +136,31 @@
 
 (use-package yasnippet
   :config
+  (setq yas-snippet-dirs (list (concat tdf-local-dir "snippets")))
   (yas-global-mode 1))
+
+(defcustom lsp-reason-ls-command
+  '("reason-language-server")
+  "Command to start reason-language-server."
+  :group 'lsp-ocaml
+  :type '(choice
+          (string :tag "Single string value")
+          (repeat :tag "List of string values"
+                  string)))
 
 (use-package lsp-mode
   :commands lsp
   :custom (lsp-log-max 100000)
   :config
   (setq lsp-session-file (concat tdf-cache-dir "lsp/session"))
-  (setq lsp-prefer-flymake nil))
+  (setq lsp-prefer-flymake nil)
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection
+    (lsp-stdio-connection (lambda () lsp-reason-ls-command))
+    :major-modes '(reason-mode)
+    :priority 0
+    :server-id 'reason-ls)))
 
 (use-package lsp-ui
   :requires lsp-mode flycheck
