@@ -25,7 +25,7 @@
 
 (defun tdf/add-formatter (mode formatter)
   "Add FORMATTER for MODE."
-  (add-to-list 'tdf/formatters (list mode formatter)))
+  (add-to-list 'tdf/formatters (cons mode formatter)))
 
 (defun tdf/format-buffer ()
   "Format buffers before saving."
