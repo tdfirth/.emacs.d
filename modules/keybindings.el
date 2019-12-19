@@ -21,14 +21,25 @@
 (global-set-key [remap keyboard-quit] #'tdf/escape)
 
 ;; Format on save
+(defvar tdf/formatters '((emacs-lisp-mode . indent-buffer)))
+
+(defun tdf/add-formatter (mode formatter)
+  "Add FORMATTER for MODE."
+  (add-to-list 'tdf/formatters (list mode formatter)))
+
 (defun tdf/format-buffer ()
   "Format buffers before saving."
-  (cond
-   ((member major-mode '(py-mode rust-mode go-mode tuareg-mode)) (lsp-format-buffer))
-   (t (indent-buffer)))
+  (funcall (cdr (assoc major-mode tdf/formatters)))
   nil)
 
 (add-hook 'before-save-hook 'tdf/format-buffer)
+
+;; Dired
+;; Make dired open in the same window when using RET or ^
+(require 'dired)
+(put 'dired-find-alternate-file 'disabled nil) ; disables warning
+(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
+(define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
 
 ;; Comment/uncomment
 (defun tdf/comment-or-uncomment-region-or-line ()
@@ -66,6 +77,7 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "bp" '(switch-to-prev-buffer :which-key "previous buffer")
  ;; dired
  "d" '(:ignore t :which-key "dired")
+ "dd" '(dired :which-key "dired")
  ;; elisp
  "e" '(:ignore t :which-key "elisp")
  "ee" '(eval-expression :which-key "eval expression")
@@ -75,9 +87,6 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "f" '(:ignore t :which-key "files")
  "ff" '(counsel-find-file :which-key "find file")
  "fr" '(counsel-recentf :which-key "find file")
- ;; git
- "g" '(:ignore t :which-key "magit")
- "gg" '(magit-status :which-key "magit status")
  ;; major mode
  "m" '(:ignore t :which-key "modes")
  "mt" '(load-theme :which-key "theme")
@@ -91,13 +100,6 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "pp" '(counsel-projectile-switch-project :which-key "switch projet")
  "pK" '(projectile-kill-buffers :which-key "kill buffers")
  "ps" '(projectile-save-project-buffers :which-key "save buffers")
- ;; treemacs
- "t" '(:ignore t :which-key "treemacs")
- "tf" '(treemacs-find-file :which-key "find file")
- "tp" '(:ignore t :which-key "projectile")
- "tpa" '(treemacs-projectile :which-key "add project")
- "tpr" '(treemacs-remove-project-from-workspace :which-key "remove project")
- "tt" '(treemacs :which-key "treemacs")
  ;; windows
  "w" '(:ignore t :which-key "window")
  "w=" '(balance-windows :which-key "balance")

@@ -11,9 +11,8 @@
 ;; TODO look at imenu further and customise
 ;; TODO setup dap mode with lsp
 ;; TODO setup docker and docker-mode with lsp
-;; TODO set up reason ml with lsp
+;; TODO set up reason ml with lsp reason-language-server doesn't seem to play nicely at all with lsp-mode :(
 ;; TODO set up c and c++ with lsp
-;; TODO set up yaml files with lsp
 
 (package-initialize)
 
@@ -26,7 +25,6 @@
                        docker
                        dockerfile-mode
                        evil
-                       evil-magit
                        exec-path-from-shell
                        flycheck
                        flycheck-rust
@@ -35,21 +33,14 @@
                        ivy
                        lsp-mode
                        lsp-ui
-                       magit
                        markdown-mode
-                       merlin
                        org
                        perspective
                        projectile
                        pyvenv
-                       reason-mode
                        rust-mode
                        smartparens
                        solarized-theme
-                       treemacs
-                       treemacs-evil
-                       treemacs-projectile
-                       tuareg
                        use-package
                        yaml-mode
                        yasnippet
@@ -87,13 +78,8 @@
   :config
   (evil-mode 1))
 
-(use-package evil-magit
-  :config
-  (require 'evil-magit)
-  (setq evil-magit-state 'normal))
-
 (use-package company
-  :hook (after-init-hook global-company-mode)
+  :hook ('after-init-hook 'global-company-mode)
   :config
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
@@ -139,28 +125,12 @@
   (setq yas-snippet-dirs (list (concat tdf-local-dir "snippets")))
   (yas-global-mode 1))
 
-(defcustom lsp-reason-ls-command
-  '("reason-language-server")
-  "Command to start reason-language-server."
-  :group 'lsp-ocaml
-  :type '(choice
-          (string :tag "Single string value")
-          (repeat :tag "List of string values"
-                  string)))
-
 (use-package lsp-mode
   :commands lsp
   :custom (lsp-log-max 100000)
   :config
   (setq lsp-session-file (concat tdf-cache-dir "lsp/session"))
-  (setq lsp-prefer-flymake nil)
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection
-    (lsp-stdio-connection (lambda () lsp-reason-ls-command))
-    :major-modes '(reason-mode)
-    :priority 0
-    :server-id 'reason-ls)))
+  (setq lsp-prefer-flymake nil))
 
 (use-package lsp-ui
   :requires lsp-mode flycheck
@@ -178,12 +148,6 @@
         company-lsp-async t
         company-lsp-enable-snippet t
         company-lsp-cache-candidates nil))
-
-(use-package magit
-  :init
-  (setq transient-levels-file (concat tdf-cache-dir "transient/levels.el")
-        transient-values-file (concat tdf-cache-dir "transient/values.el")
-        transient-history-file (concat tdf-cache-dir "transient/history.el")))
 
 (use-package smartparens
   :config
@@ -258,21 +222,6 @@
   :config
   (projectile-mode 1)
   (setq projectile-completion-system 'ivy))
-
-(use-package treemacs
-  :config
-  (progn
-    (setq treemacs-persist-file (concat tdf-cache-dir "treemacs-persist"))
-    (setq treemacs-follow-mode nil)
-    (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)))
-
-(use-package treemacs-evil
-  :after treemacs evil
-  :ensure t)
-
-(use-package treemacs-projectile
-  :after treemacs projectile
-  :ensure t)
 
 ;; wgrep
 (use-package wgrep

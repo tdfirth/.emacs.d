@@ -30,11 +30,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
 
-;; (loop for path in (list (concat user-home ".cargo/bin"), "/usr/local/bin")
-;;       do (setq exec-path (append path exec-path)))
-
 (add-to-list 'load-path tdf-module-dir)
-
 (require 'appearance)
 (require 'packages)
 (require 'keybindings)

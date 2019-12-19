@@ -23,6 +23,8 @@
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode))
 
+(tdf/add-formatter 'go-mode 'lsp-format-buffer)
+
 (tdf/define-ctrl-c-keys
  :keymaps 'go-mode-map
  "C-m r" '(:ignore t :which-key "run")
@@ -42,6 +44,8 @@
  "C-v w" '(pyvenv-workon :which-key "workon")
  )
 
+(tdf/add-formatter 'py-mode 'lsp-format-buffer)
+
 (defun tdf/pyvenv-autoload ()
   "Automatically load the virtual environment specified in a .venv file."
   (require 'projectile)
@@ -49,7 +53,8 @@
     (if (file-exists-p pfile)
         (pyvenv-workon (with-temp-buffer
                          (insert-file-contents pfile)
-                         (nth 0 (split-string (buffer-string))))))))
+                         (nth 0 (split-string (buffer-string)))))
+      (pyvenv-workon "global"))))
 
 (tdf/lang-hook 'python-mode-hook
                (pyvenv-mode)
@@ -71,6 +76,8 @@
     (read-only-mode 0)
     (select-window orig-win)))
 
+(tdf/add-formatter 'rust-mode 'lsp-format-buffer)
+
 (tdf/define-ctrl-c-keys
  :keymaps 'rust-mode-map
  "C-m r" '(tdf/cargo-process-run :which-key "run")
@@ -91,14 +98,7 @@
                (lsp))
 
 ;; ocaml
-(tdf/lang-hook 'tuareg-mode-hook
-               (merlin-mode)
-               (lsp))
-
-;; reason
-(tdf/lang-hook 'reason-mode-hook
-               (merlin-mode)
-               (lsp))
+(require 'opam-user-setup)
 
 ;; docker
 (tdf/lang-hook 'dockerfile-mode-hook
