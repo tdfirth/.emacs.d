@@ -22,6 +22,7 @@
                        company-lsp
                        counsel-projectile
                        dap-mode
+                       diminish
                        docker
                        dockerfile-mode
                        evil
@@ -36,6 +37,7 @@
                        markdown-mode
                        org
                        perspective
+                       persp-mode
                        projectile
                        pyvenv
                        rust-mode
@@ -99,7 +101,7 @@
 
 (use-package ivy
   :config
-  (setq ivy-use-virtual-buffers t)
+  ;; (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
   (setq ivy-height 10)
   (ivy-mode 1))
@@ -228,10 +230,43 @@
   :config
   (setq wgrep-auto-save-buffer t))
 
+(use-package persp-mode
+  ;; :general (my-leader-def
+  ;;           "b" #'persp-switch-to-buffer
+  ;;           "k" #'persp-kill-buffer
+  ;;           "p" '(:ignore t :which-key "Perspective")
+  ;;           "p a" #'persp-add-buffer
+  ;;           "p l" #'persp-load-state-from-file
+  ;;           "p p" #'persp-frame-switch
+  ;;           "p <tab>" #'my-last-persp-switch)
+  :diminish persp-mode
+
+  :custom
+  (persp-auto-resume-time -1)
+  (persp-emacsclient-init-frame-behaviour-override nil)
+
+  :config
+  (persp-mode))
+
 ;; TODO can we use shackle to make things better?
 ;; (use-package shackle
 ;;   :config
 ;;   (shackle-mode 1))
+
+(setq split-height-threshold 0)
+(setq compilation-window-height 10)
+(defun tdf/resize-compilation-buffer ()
+  "Resizes the compilation buffer regardless of window arrangement."
+  (when (not (get-buffer-window "*compilation*"))
+    (save-selected-window
+      (save-excursion
+        (let* ((w (split-window-vertically))
+               (h (window-height w)))
+          (select-window w)
+          (switch-to-buffer "*compilation*")
+          (shrink-window (- h compilation-window-height)))))))
+(add-hook 'compilation-mode-hook 'tdf/resize-compilation-buffer)
+
 
 (provide 'packages)
 ;;; packages.el ends here

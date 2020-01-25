@@ -89,7 +89,9 @@
     (kbd "C-c <up>") 'merlin-type-enclosing-go-up)
   (define-key merlin-mode-map
     (kbd "C-c <down>") 'merlin-type-enclosing-go-down)
-  (set-face-background 'merlin-type-face "skyblue"))
+  (set-face-background 'merlin-type-face "skyblue")
+  (setq merlin-error-after-save nil)
+  (flycheck-ocaml-setup))
 
 (defun opam-setup-utop ()
   (autoload 'utop "utop" "Toplevel for OCaml" t)
@@ -100,7 +102,8 @@
   (require 'ocamlformat)
   (tdf/add-formatter 'tuareg-mode 'ocamlformat)
   (custom-set-variables
-   '(ocamlformat-enable (quote enable-outside-detected-project))))
+   '(ocamlformat-enable (quote enable-outside-detected-project))
+   '(ocamlformat-show-errors (quote echo))))
 
 (defvar opam-tools
   '(("tuareg" . opam-setup-tuareg)
