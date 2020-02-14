@@ -90,8 +90,9 @@
   (define-key merlin-mode-map
     (kbd "C-c <down>") 'merlin-type-enclosing-go-down)
   (set-face-background 'merlin-type-face "skyblue")
-  (setq merlin-error-after-save nil)
-  (flycheck-ocaml-setup))
+  ;; (setq merlin-error-after-save nil)
+  ;; (flycheck-ocaml-setup)
+  )
 
 (defun opam-setup-utop ()
   (autoload 'utop "utop" "Toplevel for OCaml" t)

@@ -36,8 +36,6 @@
                        lsp-ui
                        markdown-mode
                        org
-                       perspective
-                       persp-mode
                        projectile
                        pyvenv
                        rust-mode
@@ -229,29 +227,6 @@
 (use-package wgrep
   :config
   (setq wgrep-auto-save-buffer t))
-
-(use-package persp-mode
-  ;; :general (my-leader-def
-  ;;           "b" #'persp-switch-to-buffer
-  ;;           "k" #'persp-kill-buffer
-  ;;           "p" '(:ignore t :which-key "Perspective")
-  ;;           "p a" #'persp-add-buffer
-  ;;           "p l" #'persp-load-state-from-file
-  ;;           "p p" #'persp-frame-switch
-  ;;           "p <tab>" #'my-last-persp-switch)
-  :diminish persp-mode
-
-  :custom
-  (persp-auto-resume-time -1)
-  (persp-emacsclient-init-frame-behaviour-override nil)
-
-  :config
-  (persp-mode))
-
-;; TODO can we use shackle to make things better?
-;; (use-package shackle
-;;   :config
-;;   (shackle-mode 1))
 
 (setq split-height-threshold 0)
 (setq compilation-window-height 10)

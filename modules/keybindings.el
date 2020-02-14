@@ -59,6 +59,7 @@ The first item in ARGS should be the keymaps argument if necessary.
 The rest of ARGS should just be the keybinding format as expected by general."
   `(general-define-key
     :states '(normal visual insert emacs treemacs)
+    :keymaps 'override
     :prefix "SPC"
     :non-normal-prefix "C-SPC"
     ,@args))
@@ -138,6 +139,7 @@ necessary.  The rest of ARGS should just be the keybinding format as expected
 by general."
   `(general-define-key
     :states '(normal visual insert emacs)
+    :keymaps 'override
     :prefix "C-c"
     ,@args))
 
