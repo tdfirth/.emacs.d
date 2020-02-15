@@ -68,25 +68,6 @@ The rest of ARGS should just be the keybinding format as expected by general."
  "SPC" '(counsel-M-x :which-key "M-x")
  "/" '(counsel-projectile-rg :which-key "rg")
  "`" '(shell-command :which-key "shell")
- ;; worksspace
- "TAB" '(:ignore t :which-key "workspace")
- "TAB ." '(persp-switch :which-key "switch workspace")
- "TAB d" '(persp-kill :which-key "delete workspace")
- ;; "TAB s" '( :which-key "save workspace")
- "TAB c" '(persp-add-new :which-key "create workspace")
- "TAB r" '(persp-rename :which-key "rename workspace")
- "TAB p" '(persp-prev :which-key "previous workspace")
- "TAB n" '(persp-next :which-key "next workspace")
- ;; "TAB 1" '( :which-key "switch to 1")
- ;; "TAB 2" '( :which-key "switch to 2")
- ;; "TAB 3" '( :which-key "switch to 3")
- ;; "TAB 4" '( :which-key "switch to 4")
- ;; "TAB 5" '( :which-key "switch to 5")
- ;; "TAB 6" '( :which-key "switch to 6")
- ;; "TAB 7" '( :which-key "switch to 7")
- ;; "TAB 8" '( :which-key "switch to 8")
- ;; "TAB 9" '( :which-key "switch to 9")
- ;; "TAB 0" '( :which-key "switch to 0")
  ;; apropos
  "a" '(counsel-apropos :which-key "apropos")
  ;; buffers
@@ -144,7 +125,7 @@ by general."
     ,@args))
 
 (tdf/define-ctrl-c-keys
- "RET" '(company-complete :which-key "complete")
+ "<return>" '(company-complete :which-key "complete")
  "C-;" '(tdf/comment-or-uncomment-region-or-line :which-key "comment line/region")
  ;; errors
  "C-e" '(:ignore t :which-key "errors")
