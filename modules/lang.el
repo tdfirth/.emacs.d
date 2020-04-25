@@ -64,37 +64,18 @@
 ;; rs
 (use-package rust-mode)
 
-(defun tdf/cargo-process-run ()
-  "Build and run Rust code."
-  (interactive)
-  (cargo-process-run)
-  (let ((orig-win (selected-window))
-        (run-win
-         (display-buffer (get-buffer "*Cargo Run*") nil 'visible)))
-    (select-window run-win)
-    (comint-mode)
-    (read-only-mode 0)
-    (select-window orig-win)))
-
 (tdf/add-formatter 'rust-mode 'lsp-format-buffer)
 
 (tdf/define-ctrl-c-keys
  :keymaps 'rust-mode-map
- "C-m r" '(tdf/cargo-process-run :which-key "run")
- "C-m b" '(cargo-process-build :which-key "build")
- "C-t t" '(cargo-process-current-test :which-key "current")
- "C-t f" '(cargo-process-current-file-tests :which-key "file")
- "C-t p" '(cargo-process-test :which-key "project")
  )
-
-(use-package cargo
-  :hook (rust-mode . cargo-minor-mode))
 
 (use-package flycheck-rust
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (tdf/lang-hook 'rust-mode-hook
-               (setq indent-tabs-mode nil)
+               ;; (setq indent-tabs-mode nil)
+               (setq tab-width 4)
                (lsp))
 
 ;; ocaml

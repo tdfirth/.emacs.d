@@ -35,6 +35,7 @@
 (require 'packages)
 (require 'keybindings)
 (require 'lang)
+(require 'org)
 
 ;; Reset gc for normal use.
 (setq gc-cons-threshold 16777216)

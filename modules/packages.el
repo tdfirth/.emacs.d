@@ -17,7 +17,6 @@
 (package-initialize)
 
 (defvar tdf/packages '(
-                       cargo
                        company
                        company-lsp
                        counsel-projectile
@@ -230,17 +229,17 @@
 
 (setq split-height-threshold 0)
 (setq compilation-window-height 10)
-(defun tdf/resize-compilation-buffer ()
-  "Resizes the compilation buffer regardless of window arrangement."
-  (when (not (get-buffer-window "*compilation*"))
-    (save-selected-window
-      (save-excursion
-        (let* ((w (split-window-vertically))
-               (h (window-height w)))
-          (select-window w)
-          (switch-to-buffer "*compilation*")
-          (shrink-window (- h compilation-window-height)))))))
-(add-hook 'compilation-mode-hook 'tdf/resize-compilation-buffer)
+;; (defun tdf/resize-compilation-buffer ()
+;;   "Resizes the compilation buffer regardless of window arrangement."
+;;   (when (not (get-buffer-window "*compilation*"))
+;;     (save-selected-window
+;;       (save-excursion
+;;         (let* ((w (split-window-vertically))
+;;                (h (window-height w)))
+;;           (select-window w)
+;;           (switch-to-buffer "*compilation*")
+;;           (shrink-window (- h compilation-window-height)))))))
+;; (add-hook 'compilation-mode-hook 'tdf/resize-compilation-buffer)
 
 
 (provide 'packages)

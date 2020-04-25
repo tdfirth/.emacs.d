@@ -18,7 +18,6 @@
 (setq select-enable-clipboard t)
 
 (global-hl-line-mode +1)
-;; (global-display-line-numbers-mode)
 (column-number-mode t)
 (size-indication-mode t)
 
